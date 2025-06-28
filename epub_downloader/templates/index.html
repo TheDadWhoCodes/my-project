@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset=""UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EPUB Downloader</title>
+    </head>
+    <body>
+        <h1>EPUB Downloader</h1>
+        <!--  url 'name'  ensures we use current url of current app and name of url to function --> 
+        <form action="{% url 'convert_url_text' %}" method="post">
+            {% csrf_token %}
+            <input type="text" value="" name="url" />
+            <input type="submit" class="btn" value="Click to download" name="mybtn">
+        </form>
+        {{ download }}
+    </body>
+</html>

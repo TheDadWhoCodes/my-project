@@ -1,0 +1,28 @@
+# Python
+*.pyc
+__pycache__/
+
+# Environment
+.env
+
+# Database
+db.sqlite3
+
+# Virtual environments
+venv/
+env/
+
+# Django migration files
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+
+# Static and media folders (if applicable)
+staticfiles/
+media/
+
+# IDE files
+.idea/
+.vscode/
