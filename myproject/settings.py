@@ -23,9 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yh(minci4egt=t&7-p$=jgv6u-7%&qp&6u-beh9z)p(*644#qv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = []
+# Get the allowed hosts from an environment variable, splitting by comma
+ALLOWED_HOSTS_STR = os.environ.get('RAILWAY_PUBLIC_DOMAIN', '')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_STR.split(',') if host.strip()]
+
+# Add localhost and 127.0.0.1 for local development
+if DEBUG:
+    ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
 
 
 # Application definition
