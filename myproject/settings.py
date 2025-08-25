@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,15 +24,8 @@ SECRET_KEY = 'django-insecure-yh(minci4egt=t&7-p$=jgv6u-7%&qp&6u-beh9z)p(*644#qv
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
 
-# Get the allowed hosts from an environment variable, splitting by comma
-ALLOWED_HOSTS_STR = os.environ.get('RAILWAY_PUBLIC_DOMAIN', '')
-ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_STR.split(',') if host.strip()]
-
-# Add localhost and 127.0.0.1 for local development
-if DEBUG:
-    ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -46,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hkbakery',
-    'epub_downloader'
+    'epub_downloader',
+    'labyrinth',
+    'nhs'
 ]
 
 MIDDLEWARE = [
@@ -64,7 +58,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'myproject' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

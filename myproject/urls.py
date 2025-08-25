@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hkbakery', include('hkbakery.urls')),
-    path('epub-downloader', include('epub_downloader.urls'))
+    path('', include('hkbakery.urls')),
+    path('nhs/', include('nhs.urls')),
+    path('epub-downloader/', include('epub_downloader.urls'))
 ]

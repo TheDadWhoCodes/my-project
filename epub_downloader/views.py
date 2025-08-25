@@ -14,7 +14,7 @@ from ebooklib import epub
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'epub_downloader/index.html')
 
 
 def convert_url_text(request):
@@ -25,13 +25,38 @@ def convert_url_text(request):
     soup = BeautifulSoup(html_content, 'html.parser')
     
     # get p and H1-H4 elements only
-    text_tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']
+    text_tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'img']
 
     all_elements = soup.find_all(text_tags)
     
     html_parts = [];
     for element in all_elements:
         html_parts.append(str(element))
+
+    image_counter = 1
+    image_map = {}
+
+    for img_tag in soup.find_all('img'):
+        img_url = img_tag.get('src')
+        if img_url:
+            try:
+                img_response = requests.get(img_url)
+                img_response.raise_for_status()
+                image_ext = os.path.splitext(img_url)[1].split('?')[0] or '.jpg'
+                image_filename = f'image_{image_counter}{image_ext}'
+                image_counter += 1
+
+                # Embed image in EPUB
+                img_item = epub.EpubImage()
+                img_item.file_name = image_filename
+                img_item.content = img_response.content
+                img_item.media_type = f'image/{image_ext.strip(".")}'
+                book.add_item(img_item)
+
+                # Rewrite src in the soup
+                img_tag['src'] = image_filename
+            except Exception as e:
+                print(f"Skipping image {img_url}: {e}")
 
     combined_html_content = "\n".join(html_parts)
 
