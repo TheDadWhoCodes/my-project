@@ -1,0 +1,6 @@
+<p>Edit {{ bread.name }}</p>
+<form method="post" action="{% url 'edit_bread' bread.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Bread</button>
+</form>

@@ -11,10 +11,20 @@
         <ul>
             {% for bread in bread %}
                 <li>
-                    <h3>{{ bread.name}} </h3>
-                    <p>{{ bread.content }}</p>
+                    <form method="post" action="{% url 'delete_bread' bread.id %}">
+                        {% csrf_token %}
+                        <h3>{{ bread.name}} </h3>
+                        <p>{{ bread.content }}</p>
+                        <button type="submit">Delete</button>
+                    </form>
+                    <a href="{% url 'edit_bread' bread.id %}">Edit</a>
                 </li>
             {% endfor %}
         </ul>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Bread</button>
+        </form>
     </body>
 </html>
